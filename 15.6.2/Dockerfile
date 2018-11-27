@@ -1,12 +1,6 @@
-FROM ubuntu:16.04 as build
+FROM ubuntu:18.04 as build
 # Asterisk Certified
-ARG VERSION=asterisk-certified-13.21-cert3
-# Current LTS
-#ARG VERSION=asterisk-13-current
-# Current release
-#ARG VERSION=asterisk-15-current
-# Beta or Test Release 
-#ARG VERSION=asterisk-16.0.0-rc3
+ARG VERSION=asterisk-15.6.2
 
 LABEL name="Asterisk Build"
 
@@ -19,7 +13,6 @@ RUN apt-get update \
     aptitude-common \
     build-essential \
     g++ \
-    libboost-iostreams1.58.0 \
     libcgi-fast-perl \
     libcgi-pm-perl \
     libclass-accessor-perl \
@@ -39,7 +32,6 @@ RUN apt-get update \
     libsub-name-perl \
     libtimedate-perl \
     liburi-perl \
-    libxapian22v5 \
     libssl-dev \
     libncurses5-dev \
     libnewt-dev \
@@ -48,17 +40,15 @@ RUN apt-get update \
     linux-headers-generic \
     libsqlite3-dev \
     make \
+    tzdata \
     uuid-dev \ 
     wget
 
 WORKDIR /tmp/
 # Download the version specified in the ARG above from the official asterisk site. 
-RUN wget http://downloads.asterisk.org/pub/telephony/certified-asterisk/$VERSION.tar.gz \
+RUN wget http://downloads.asterisk.org/pub/telephony/asterisk/$VERSION.tar.gz \
     && mkdir -p /tmp/asterisk \
     && tar -xzvf $VERSION.tar.gz -C asterisk --strip-components=1
-# Copy in menuselect to let asterisk know what modules to install since we do not want to use the 
-# interactive menuselect process.
-COPY menuselect.makeopts /tmp/asterisk/
 WORKDIR /tmp/asterisk/
 # Install prereq should not install anything new as it should have already been installed
 # above, but this should catch any unistalled packages, however since there is no -y option specified
@@ -69,8 +59,13 @@ RUN mkdir -p /opt/asterisk \
     #CFLAGS='-g -O2 -mtune=native'
     # -rpath,/usr/lib64 needs to be included so you do not receive an error on startup stating that libasteriskssl.so is not found.
     && LDFLAGS="-Wl,-rpath,/usr/lib64" \
-       ./configure --with-pjproject-bundled --prefix=/opt/asterisk --libdir=/usr/lib64 \ 
-    && make menuselect.makeopts \
+       ./configure --with-pjproject-bundled --prefix=/opt/asterisk --libdir=/usr/lib64 \
+    && ldconfig
+
+# Copy in menuselect to let asterisk know what modules to install since we do not want to use the 
+# interactive menuselect process.
+COPY menuselect.makeopts /tmp/asterisk/
+RUN make menuselect.makeopts \
     && menuselect/menuselect --disable BUILD_NATIVE menuselect.makeopts \
     && make \
     && make install \
@@ -78,7 +73,7 @@ RUN mkdir -p /opt/asterisk \
     # but it does work well for testing to ensure asterisk starts properly
     && make samples
 
-FROM ubuntu:16.04 as final
+FROM ubuntu:18.04 as final
 LABEL name="Asterisk Final"
 ENV TZ=America/Chicago
 RUN apt-get update \
@@ -94,7 +89,6 @@ RUN apt-get update \
     liblua5.2-0 \
     libpq5 \
     libiksemel3 \
-    libical1a \
     libsrtp0 \
     libssl1.0.0 \
     libsqlite3-0 \
