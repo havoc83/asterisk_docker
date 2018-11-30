@@ -79,22 +79,34 @@ ENV TZ=America/Chicago
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     libavahi-client3 \
-    libcurl3 \
+    libbluetooth3 \
+    libcodec2-0.7 \
+    libcurl4 \
     libgsm1 \
     libjansson4 \
     libneon27 \
     liburiparser1 \
     libedit2 \
     libgmime-2.6-0 \
+    libical3 \
+    libjack0 \
     liblua5.2-0 \
+    libmysqlclient20 \
+    libosptk4 \
+    libsrtp2-1 \
+    libradcli4 \
+    libresample1 \
     libpq5 \
     libiksemel3 \
+    libsnmp30 \
     libsrtp0 \
     libssl1.0.0 \
     libsqlite3-0 \
     libspandsp2 \
     libspeex1 \
     libspeexdsp1 \
+    libsybdb5 \
+    libunbound2 \
     libvorbis0a \
     libvorbisenc2 \
     libvorbisfile3 \

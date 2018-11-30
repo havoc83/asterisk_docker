@@ -16,3 +16,6 @@
 # Purpose
 This repository attempts to create production ready Asterisk images, by utilizing multistage builds.  Ubuntu 18 is used as the base image for all images, unless otherwise noted.  All images contain fully functional Asterisk instances however they can also be used as a base to add your own configuration, agi, etc.
 
+# Example 
+You will need to run on the host network because of the large number of ports required for rtp traffic.  (By default Asterisk will use ports between 10,000 - 20,000).  
+`docker run -d --rm --name="Asterisk-16" --network="host" -v asterisk:/opt/asterisk jrhavlik/asterisk:16.0.1`  
