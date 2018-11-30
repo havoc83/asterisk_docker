@@ -1,7 +1,7 @@
 # Tags
 - 13.21-cert3, cert, cert3, certified, 13-cert3 [Dockerfile](https://github.com/havoc83/asterisk_docker/13.21-cert3/Dockerfile)
 - 13.23.1, 13.23, 13 [Dockerfile](https://github.com/havoc83/asterisk_docker/13.23.1/Dockerfile)
-- 15.16.2, 15 [Dockerfile](https://github.com/havoc83/asterisk_docker/15.6.2/Dockerfile)
+- 15.6.2, 15 [Dockerfile](https://github.com/havoc83/asterisk_docker/15.6.2/Dockerfile)
 - 16.0.1, 16, LTS, Latest [Dockerfile](https://github.com/havoc83/asterisk_docker/16.0.1/Dockerfile)
   
   ## Notes
