@@ -4211,7 +4211,7 @@ static void leave_queue(struct queue_ent *qe)
 					     "Queue", q->name,
 					     "Position", qe->pos,
 					     "Count", q->count,
-						 "Maxhold", q->maxCount);
+						 "MaxHold", maxHold);
 			ast_channel_publish_cached_blob(qe->chan, queue_caller_leave_type(), blob);
 			ast_debug(1, "Queue '%s' Leave, Channel '%s'\n", q->name, ast_channel_name(qe->chan));
 			/* Take us out of the queue */

@@ -250,7 +250,7 @@ static int record_exec(struct ast_channel *chan, const char *data)
 	);
 	int ms;
 	struct timeval start;
-	const char *status_response = "ERROR";
+	char *status_response = "ERROR";
 
 	/* The next few lines of code parse out the filename and header from the input string */
 	if (ast_strlen_zero(data)) { /* no data implies no filename or anything is present */
@@ -468,7 +468,7 @@ static int record_exec(struct ast_channel *chan, const char *data)
 				ast_debug(1, "Got OPERATOR\n");
 				break;
 			case RESPONSE_DTMF:
-				status_response = dtmf_response;
+				sprintf(status_response, "%d", f->subclass.integer);
 				ast_debug(1, "Got DTMF\n");
 				break;
 			}
