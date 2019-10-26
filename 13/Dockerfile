@@ -1,6 +1,6 @@
 FROM ubuntu:18.04 as build
 # Asterisk Certified
-ARG VERSION=asterisk-13.26.0
+ARG VERSION=asterisk-13.29.1
 
 LABEL name="Asterisk Build"
 
